@@ -34,6 +34,9 @@ async def style(request):
 async def img(request):
     return web.Response(content_type='image/svg+xml', text=fetch_static_content('play.svg'))
 
+async def ping(request):
+    return web.Response(content_type='text/html', text='pong')
+
 
 async def offer(request):
     params = await request.json()
