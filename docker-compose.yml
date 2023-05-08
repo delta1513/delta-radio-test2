@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  delta_radio:
+    build: delta_radio/
+    env_file:
+      - .env
+    ports:
+      - "${EXTERN_PORT_HTTP}:8000"
+    networks:
+      delta_radio_net:
+        ipv4_address: "172.16.61.2"
+    volumes:
+      - "delta-music:${RADIO_MUSIC_DIR}"
+      - ./delta_radio:/delta_radio
+  ftp:
+    image: "stilliard/pure-ftpd"
+    env_file:
+      - .env
+    ports:
+      - "${FTP_PORT}:21"
+      - "${MIN_FTP_PORT}-${MAX_FTP_PORT}"
+    volumes:
+      - "delta-music:${FTP_USER_HOME}"
+    networks:
+      delta_radio_net:
+        ipv4_address: "172.16.61.3"
+
+networks:
+  delta_radio_net:
+    ipam:
+      driver: "default"
+      config:
+        - subnet: "172.16.61.0/24"
+
+volumes:
+  delta-music:
