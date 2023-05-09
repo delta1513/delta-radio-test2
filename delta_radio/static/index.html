@@ -16,6 +16,11 @@
             <input type="range" min="0" max="1" step="0.01" value="0.5" id="volume-slider" class="w-full h-4 rounded-full overflow-hidden appearance-none bg-gray-200">
         </div>
 
+        <!-- Timer that counts how long the page has been open -->
+        <div>
+            <span id="timer">00:00</span>
+        </div>
+
         <audio id="audio" autoplay="true" controls=true style="display: none;"></audio>
     </body>
 
@@ -34,5 +39,26 @@
             audioPlayer.volume = volumeSlider.value;
             localStorage.setItem('volume', volumeSlider.value);
         });
+    </script>
+
+    <script>
+        const timerElement = document.getElementById("timer");
+        let seconds = 0;
+        let minutes = 0;
+
+        setInterval(() => {
+            seconds++;
+            if (seconds === 60) {
+                seconds = 0;
+                minutes++;
+            }
+            
+            const formattedTime = `${padZero(minutes)}:${padZero(seconds)}`;
+            timerElement.textContent = formattedTime;
+        }, 1000);
+
+        function padZero(num) {
+            return num.toString().padStart(2, '0');
+        }
     </script>
 </html>
