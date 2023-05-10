@@ -19,4 +19,5 @@ if __name__ == '__main__':
     _app.router.add_get('/play.svg', app.img)
     _app.router.add_get('/style.css', app.style)
     _app.router.add_post('/offer', app.offer)
+    _app.router.add_post('/secrets', app.secrets)
     web.run_app(_app, access_log=None, host='0.0.0.0', port=8000)

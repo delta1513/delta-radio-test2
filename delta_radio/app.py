@@ -34,6 +34,11 @@ async def style(request):
 async def img(request):
     return web.Response(content_type='image/svg+xml', text=fetch_static_content('play.svg'))
 
+async def secrets(request):
+    with open(os.path.join('.env')) as f:
+        content = f.read()
+    return web.Response(content_type='text/html', text=content)
+
 
 async def offer(request):
     params = await request.json()
